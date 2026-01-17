@@ -93,6 +93,7 @@ class TransactionController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        $transaction->load(['user', 'ticketType.event']);
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('transactions.ticket-pdf', compact('transaction'));
         
         return $pdf->download('tiket-' . $transaction->ticketType->event->nama_event . '-' . $transaction->id . '.pdf');
